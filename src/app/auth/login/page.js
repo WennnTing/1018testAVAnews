@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const AuthForm = () => {
+const Login = () => {
+    const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -17,12 +19,12 @@ const AuthForm = () => {
             params.append("Account", email);
             params.append("Password", password);
 
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/auth/Login`, {
+            const response = await fetch("/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
-                body: params.toString(),
+                body: JSON.stringify({ email, password }),
             });
 
             if (!response.ok) {
@@ -33,6 +35,7 @@ const AuthForm = () => {
 
             const data = await response.json();
             console.log("Login successful:", data);
+            router.push("/articles/list");
         } catch (error) {
             console.error("Request failed:", error);
             setError("An unexpected error occurred.");
@@ -72,4 +75,4 @@ const AuthForm = () => {
     );
 };
 
-export default AuthForm;
+export default Login;

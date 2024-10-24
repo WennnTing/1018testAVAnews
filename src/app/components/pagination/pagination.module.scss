@@ -1,0 +1,26 @@
+.pagination {
+
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    // border: 1px solid purple;
+
+    &__back,
+    &__next {
+        background-color: transparent;
+        outline: none;
+        border: 1px solid #0aecd1;
+        color: white;
+        padding: 8px 10px;
+
+    }
+
+    &__next {}
+
+    &__page,
+    &__ellipsis {
+        padding: 8px 10px;
+        border: 1px solid #0aecd1;
+        color: white;
+    }
+}

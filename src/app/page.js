@@ -1,8 +1,7 @@
-import AuthForm from "./components/auth-form/AuthForm";
 export default function Home() {
   return (
     <div>
-      <AuthForm />
+      <p>主頁</p>
     </div>
   );
 }

@@ -1,0 +1,97 @@
+.accordion {
+    margin-bottom: 20px;
+    padding: 20px;
+
+    &__item {
+        padding: 20px 0;
+        margin-bottom: 16px;
+        border-bottom: 1px solid #848484;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+    }
+
+    &__headerWrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__header {
+        color: white;
+        transition: background-color 0.3s ease;
+        font-size: 18px;
+
+        &.active {
+            color: #0aecd1;
+        }
+    }
+
+    &__iconWrapper {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+
+    &__symbol {
+        font-size: 20px;
+        margin-left: 10px;
+        transition: transform 0.3s ease;
+        color: white;
+        cursor: pointer;
+
+        &:hover {
+            color: rgb(2, 206, 216);
+        }
+
+        .icon {
+            transition: transform 0.3s ease;
+        }
+
+        &.rotated .icon {
+            transform: rotate(45deg);
+        }
+    }
+
+
+    &__content {
+        border-top: none;
+        color: white;
+
+        a {
+            display: inline-block;
+            color: white;
+            margin-top: 24px;
+            border: 1px solid #ddd;
+            padding: 8px 16px;
+            border-radius: 16px;
+
+            &:hover {
+                border: 1px solid #0aecd1;
+            }
+        }
+
+    }
+
+    .customToastContainer {
+        width: 300px;
+    }
+
+    .customToast {
+        background-color: #333;
+        color: #fff;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .customToastBody {
+        font-size: 14px;
+        color: #eee;
+    }
+
+    .customToastProgress {
+        background-color: #0aecd1;
+    }
+
+}
