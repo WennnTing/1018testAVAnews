@@ -51,7 +51,7 @@ export default async function ArticlePage({ params }) {
                 <meta property="og:title" content={article.Title} />
                 <meta property="og:description" content={article.Content.slice(0, 100)} />
                 <meta property="og:image" content={article.ImageUrl} />
-                <meta property="og:url" content={`http://localhost:3000/articles/${id}`} />
+                <meta property="og:url" content={`https://master.d31i5oomezebae.amplifyapp.com/articles/${id}`} />
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={article.Title} />
                 <meta name="twitter:description" content={article.Content.slice(0, 100)} />
