@@ -1,6 +1,5 @@
 "use server";
 import React from "react";
-import Head from "next/head";
 
 async function fetchArticle(id) {
     const token = "your_fixed_token_value";
@@ -23,11 +22,47 @@ async function fetchArticle(id) {
         console.log("Fetched data:", data);
         return data.BlockChainNews || null;
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching article:", error);
         return null;
     }
 }
 
+export async function generateMetadata({ params }) {
+    const { id } = params;
+    const article = await fetchArticle(id);
+
+    if (!article) {
+        return {
+            title: "Article Not Found",
+            description: "The requested article could not be found.",
+        };
+    }
+
+    const defaultImage = "/coin.jpg";
+    const imageUrl = article.ImageUrl || defaultImage;
+    const description = article.Content ? article.Content.slice(0, 100) : "No description available";
+
+    return {
+        title: article.Title,
+        description: description,
+        openGraph: {
+            title: article.Title,
+            description: description,
+            images: [
+                imageUrl,
+            ],
+            url: `https://master.d31i5oomezebae.amplifyapp.com/articles/${id}`,
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: article.Title,
+            description: description,
+            images: [
+                imageUrl,
+            ],
+        },
+    };
+}
 
 export default async function ArticlePage({ params }) {
     console.log("Params received in ArticlePage:", params);
@@ -46,17 +81,6 @@ export default async function ArticlePage({ params }) {
 
     return (
         <div>
-            <Head>
-                <title>{article.Title}</title>
-                <meta property="og:title" content={article.Title} />
-                <meta property="og:description" content={article.Content.slice(0, 100)} />
-                <meta property="og:image" content={article.ImageUrl} />
-                <meta property="og:url" content={`https://master.d31i5oomezebae.amplifyapp.com/articles/${id}`} />
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={article.Title} />
-                <meta name="twitter:description" content={article.Content.slice(0, 100)} />
-                <meta name="twitter:image" content={article.ImageUrl} />
-            </Head>
             <h1>{article.Title}</h1>
             {article.ImageUrl && <img src={article.ImageUrl} alt={article.Title} />}
             <p>{article.Content}</p>
