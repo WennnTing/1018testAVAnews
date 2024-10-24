@@ -39,7 +39,7 @@ export async function generateMetadata({ params }) {
     }
 
     const defaultImage = "/coin.jpg";
-    const imageUrl = article.ImageUrl || defaultImage;
+    const imageUrl = article.ImageUrl && article.ImageUrl.trim() ? article.ImageUrl : defaultImage;
     const description = article.Content ? article.Content.slice(0, 100) : "No description available";
 
     return {
