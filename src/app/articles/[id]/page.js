@@ -38,8 +38,10 @@ export async function generateMetadata({ params }) {
         };
     }
 
-    const defaultImage = "/coin.jpg";
-    const imageUrl = article.ImageUrl && article.ImageUrl.trim() ? article.ImageUrl : defaultImage;
+    const defaultImage = "https://master.d31i5oomezebae.amplifyapp.com/coin.jpg";
+    const imageUrl = article.ImageUrl && article.ImageUrl.trim()
+        ? article.ImageUrl
+        : defaultImage;
     const description = article.Content ? article.Content.slice(0, 100) : "No description available";
 
     return {
@@ -48,19 +50,30 @@ export async function generateMetadata({ params }) {
         openGraph: {
             title: article.Title,
             description: description,
-            images: [
-                imageUrl,
-            ],
+            images: [imageUrl],
             url: `https://master.d31i5oomezebae.amplifyapp.com/articles/${id}`,
         },
         twitter: {
             card: "summary_large_image",
             title: article.Title,
             description: description,
-            images: [
-                imageUrl,
-            ],
+            images: [imageUrl],
         },
+    };
+}
+
+
+export async function generateImageMetadata({ params }) {
+    const { id } = params;
+    const article = await fetchArticle(id);
+    const defaultImage = "https://master.d31i5oomezebae.amplifyapp.com/coin.jpg";
+    const imageUrl = article?.ImageUrl || defaultImage;
+
+    return {
+        url: imageUrl,
+        alt: article?.Title || "Default Image",
+        width: 1200,
+        height: 630,
     };
 }
 
