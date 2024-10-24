@@ -1,0 +1,25 @@
+.newsDetail {
+    // border: 1px solid red;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    &__title {
+        color: white;
+    }
+
+    &__content,
+    &__comment,
+    &__commentReason,
+    &__createTime {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    &__subTitle {
+        color: rgba(255, 255, 255, 0.7);
+
+    }
+
+
+}

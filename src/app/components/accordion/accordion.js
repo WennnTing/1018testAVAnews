@@ -5,6 +5,7 @@ import { RiAddLargeLine } from "react-icons/ri";
 import { FaLink } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Image from "next/image";
 
 const Accordion = ({ items }) => {
     const [activeIndex, setActiveIndex] = useState(null);
@@ -76,8 +77,26 @@ const Accordion = ({ items }) => {
                     {activeIndex === index && (
                         <div className={style.accordion__content}>
                             {item.content}
+                            {item.ImageUrl ? (
+                                <Image
+                                    src={item.ImageUrl}
+                                    width={400}
+                                    height={400}
+                                    alt={item.Title || "Default Image"}
+                                    className={style.accordion__image}
+                                />
+                            ) : (
+                                <Image
+                                    src="/coin.jpg"
+                                    width={400}
+                                    height={400}
+                                    alt="Default Image"
+                                    className={style.accordion__image}
+                                />
+                            )}
                         </div>
                     )}
+
                 </div>
             ))}
             <ToastContainer

@@ -1,5 +1,7 @@
 "use server";
 import React from "react";
+import style from './newsDetail.module.scss';
+import Image from "next/image";
 
 async function fetchArticle(id) {
     const token = "your_fixed_token_value";
@@ -93,22 +95,41 @@ export default async function ArticlePage({ params }) {
     }
 
     return (
-        <div>
-            <h1>{article.Title}</h1>
-            {article.ImageUrl && <img src={article.ImageUrl} alt={article.Title} />}
-            <p>{article.Content}</p>
+        <div className={style.newsDetail}>
+            <h1 className={style.newsDetail__title}>{article.Title}</h1>
+            {article.ImageUrl &&
+                <Image
+                    src={article.ImageUrl}
+                    width={400}
+                    height={400}
+                    alt={article.Title || "Default Image"}
+                    className={style.accordion__image}
+                />
+            }
+            <p className={style.newsDetail__content}>{article.Content}</p>
+
             <div>
-                <h3>Comment:</h3>
-                <p>{article.Comment}</p>
+                <p className={style.newsDetail__comment}>
+                    {article.Comment}
+                </p>
+            </div>
+
+            <div>
+                <h3 className={style.newsDetail__subTitle}>
+                    Comment Reason:
+                </h3>
+                <p className={style.newsDetail__commentReason}>
+                    {article.CommentReason}
+                </p>
             </div>
             <div>
-                <h3>Comment Reason:</h3>
-                <p>{article.CommentReason}</p>
+                <h3 className={style.newsDetail__subTitle}>
+                    Created At:
+                </h3>
+                <p className={style.newsDetail__createTime}>
+                    {article.CreateTime}
+                </p>
             </div>
-            <div>
-                <h3>Created At:</h3>
-                <p>{article.CreateTime}</p>
-            </div>
-        </div>
+        </div >
     );
 }
