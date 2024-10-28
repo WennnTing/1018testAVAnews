@@ -3,6 +3,10 @@ import React from "react";
 import style from './newsDetail.module.scss';
 import Image from "next/image";
 
+import { FaRegSmile } from "react-icons/fa";
+import { FaRegFaceMeh } from "react-icons/fa6";
+import { FaRegFaceFrown } from "react-icons/fa6";
+
 async function fetchArticle(id) {
     const token = "your_fixed_token_value";
 
@@ -79,6 +83,15 @@ export async function generateImageMetadata({ params }) {
     };
 }
 
+function parseComments(commentText) {
+    const comments = commentText.split("，").map((item) => {
+        const [market, typeText] = item.split("：");
+        const type = typeText === "正面" ? "positive" : typeText === "中性" ? "neutral" : "negative";
+        return { MarketName: market.trim(), Type: type };
+    });
+    return comments;
+}
+
 export default async function ArticlePage({ params }) {
     console.log("Params received in ArticlePage:", params);
     const { id } = params;
@@ -94,42 +107,82 @@ export default async function ArticlePage({ params }) {
         );
     }
 
+    const parsedComments = parseComments(article.Comment);
+
+
     return (
         <div className={style.newsDetail}>
             <h1 className={style.newsDetail__title}>{article.Title}</h1>
+
+            <div className={style.newsDetail__commentSection}>
+                <h2 className={style.newsDetail__commentTitle}>分析評級</h2>
+                <div className={style.newsDetail__commentWrapper}>
+                    {parsedComments.map((comment, index) => (
+                        <div className={`
+                        ${style.newsDetail__comment} 
+                        ${style[`newsDetail__comment--${comment.Type}`]}`}
+                            key={index}
+                        >
+                            <div className={`
+                            ${style.newsDetail__icon} 
+                            ${style[`newsDetail__icon--${comment.Type}`]}`}
+                            >
+                                {(() => {
+                                    switch (comment.Type) {
+                                        case "positive":
+                                            return <FaRegSmile />;
+                                        case "neutral":
+                                            return <FaRegFaceMeh />;
+                                        case "negative":
+                                            return <FaRegFaceFrown />;
+                                        default:
+                                            return null;
+                                    }
+                                })()}
+                            </div>
+                            <span className={style.newsDetail__market}>
+                                {comment.MarketName}
+                            </span>
+                            <span className={style.newsDetail__level}>
+                                {(() => {
+                                    switch (comment.Type) {
+                                        case "positive":
+                                            return "良好";
+                                        case "neutral":
+                                            return "中性";
+                                        case "negative":
+                                            return "負面";
+                                    }
+                                })()}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <p className={style.newsDetail__createTime}>
+                {article.CreateTime}
+            </p>
             {article.ImageUrl &&
                 <Image
                     src={article.ImageUrl}
                     width={400}
                     height={400}
                     alt={article.Title || "Default Image"}
-                    className={style.accordion__image}
+                    className={style.newsDetail__image}
                 />
             }
             <p className={style.newsDetail__content}>{article.Content}</p>
 
             <div>
-                <p className={style.newsDetail__comment}>
-                    {article.Comment}
-                </p>
-            </div>
-
-            <div>
                 <h3 className={style.newsDetail__subTitle}>
-                    Comment Reason:
+                    市場短評
                 </h3>
                 <p className={style.newsDetail__commentReason}>
                     {article.CommentReason}
                 </p>
             </div>
-            <div>
-                <h3 className={style.newsDetail__subTitle}>
-                    Created At:
-                </h3>
-                <p className={style.newsDetail__createTime}>
-                    {article.CreateTime}
-                </p>
-            </div>
+
         </div >
     );
 }
