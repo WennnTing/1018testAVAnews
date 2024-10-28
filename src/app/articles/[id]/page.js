@@ -183,6 +183,13 @@ export default async function ArticlePage({ params }) {
                 </p>
             </div>
 
+            <div className={style.newsDetail__bannerSection}>
+                <div className={style.newsDetail__bannerImg}></div>
+                <a href="https://www.avairobot.com/v2/register" target="_blank" rel="noopener noreferrer" className={style.newsDetail__button}>
+                    Read More
+                </a>
+            </div>
+
         </div >
     );
 }
