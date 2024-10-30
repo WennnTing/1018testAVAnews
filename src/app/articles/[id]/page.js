@@ -44,7 +44,8 @@ export async function generateMetadata({ params }) {
         };
     }
 
-    const defaultImage = "https://master.d31i5oomezebae.amplifyapp.com/coin.jpg";
+    // const defaultImage = "https://master.d31i5oomezebae.amplifyapp.com/coin.jpg";
+    const defaultImage = "https://master.dyi6ut6d2cj2k.amplifyapp.com/coin.jpg";
     const imageUrl = article.ImageUrl && article.ImageUrl.trim()
         ? article.ImageUrl
         : defaultImage;
